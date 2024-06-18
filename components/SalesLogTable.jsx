@@ -5,8 +5,8 @@ import { FaFilter, FaSort } from "react-icons/fa";
 import { MdCall, MdVideocam } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoIosArrowDown } from "react-icons/io";
-
-const SalesLogTable = ({ data }) => {
+import { format } from 'date-fns';
+const SalesLogTable = ({ data ,handleEditTask}) => {
   const [openFilter, setOpenFilter] = useState(null);
   const [selectedTaskTypes, setSelectedTaskTypes] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -30,7 +30,7 @@ const SalesLogTable = ({ data }) => {
   const handleStatusOption = (option, row) => {
     switch (option) {
       case "edit":
-        console.log("Edit clicked for row:", row);
+        handleEditTask(row.original);
         break;
       case "duplicate":
         console.log("Duplicate clicked for row:", row);
@@ -46,8 +46,17 @@ const SalesLogTable = ({ data }) => {
 
   const columns = useMemo(
     () => [
-      { Header: "Date", accessor: "date" },
-      { Header: "Entity Name", accessor: "entity" },
+      { Header: "Date",
+        accessor: "date",
+        Cell: ({value}) => format(new Date(value),'dd/MM/yyyy')
+      },
+      { Header: "Entity Name", accessor: "entityName",
+
+        Cell: ({value}) => (
+          <span className="text-[#004b6e] font-semibold">{value}</span>
+        )
+
+       },
       {
         Header: "Task Type",
         accessor: "taskType",
@@ -107,14 +116,14 @@ const SalesLogTable = ({ data }) => {
         ),
       },
       { Header: "Time", accessor: "time" },
-      { Header: "Contact Person", accessor: "contact" },
-      { Header: "Notes", accessor: "notes" },
+      { Header: "Contact Person", accessor: "contactPerson" },
+      { Header: "Notes", accessor: "note" },
       {
         Header: "Status",
         accessor: "status",
         Cell: ({ row }) => (
           <div className="flex justify-between items-center relative">
-            <span className={row.values.status === "Open" ? "text-red-500" : "text-blue-500"}>
+            <span className={` font-semibold ${row.values.status === "Open" ? "text-red-500" : "text-blue-500"}`}>
               {row.values.status}
             </span>
             <button
@@ -166,8 +175,8 @@ const SalesLogTable = ({ data }) => {
     <div className="overflow-x-auto min-h-72">
       <table className="min-w-full" {...getTableProps()}>
         <thead className="">
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+          {headerGroups.map((headerGroup,index) => (
+            <tr key={`header-${index}`} {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th
                   className="px-6 py-3 text-left text-sm font-medium text-gray-500 whitespace-nowrap tracking-wider relative"
@@ -200,7 +209,7 @@ const SalesLogTable = ({ data }) => {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <tr key={row.id} {...row.getRowProps()}>
+              <tr key={`row-${row.id}`} {...row.getRowProps()}>
                 {row.cells.map((cell) => (
                   <td className="px-6 py-4 whitespace-nowrap" key={cell.column.id}>
                     {cell.render("Cell")}

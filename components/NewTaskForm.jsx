@@ -1,16 +1,80 @@
+'use client'
+import { useTaskProvider } from "@/context/TaskProvider";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-const NewTaskForm = ({ formModal, setFormModal }) => {
+const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
   const { register, handleSubmit, setValue, watch, formState: { errors },reset } = useForm();
   const status = watch("status");
 
   useEffect(() => {
-    setValue("status", "Open"); 
-  }, [setValue]);
 
-  const onSubmit = (data) => {
-    console.log(data);
+    if (initialTask) {
+      setValue("entityName", initialTask.entityName);
+      setValue("date", new Date(initialTask.date).toISOString().substring(0, 10));
+      setValue("time", initialTask.time);
+      setValue("taskType", initialTask.taskType);
+      setValue("phoneNumber", initialTask.phoneNumber);
+      setValue("contactPerson", initialTask.contactPerson);
+      setValue("note", initialTask.note);
+      setValue("status", initialTask.status);
+    } else {
+      setValue("status", "Open");
+    }
+
+  }, [setValue, initialTask]);
+
+
+  const {fetchTasks,addTasks,updateTasks,deleteTask} = useTaskProvider();
+
+
+  const handleDelete = async()=>{
+      
+    try {
+      if(initialTask){
+        const result = await deleteTask(initialTask,initialTask._id);
+        if (result.success) {
+          console.log("Task saved successfully", result.task);
+          reset();
+          const res = await fetchTasks();
+          setData(res);
+          setFormModal(false);
+        } else {
+          console.error("Error saving task", result.error);
+        }
+
+      }
+    } catch (error) {
+      console.error("Error submitting form", error);
+    }
+    
+ 
+ 
+  }
+
+  const onSubmit = async(data) => {
+    
+    try {
+      let result
+      if(initialTask){
+        result = await updateTasks(data,initialTask._id);
+      }
+      else{
+        result = await addTasks(data);
+      }
+
+      if (result.success) {
+        console.log("Task saved successfully", result.task);
+        reset();
+        const res = await fetchTasks();
+        setData(res);
+        setFormModal(false);
+      } else {
+        console.error("Error saving task", result.error);
+      }
+    } catch (error) {
+      console.error("Error submitting form", error);
+    }
 
     
   };
@@ -31,7 +95,7 @@ const NewTaskForm = ({ formModal, setFormModal }) => {
             <div className="max-w-md mx-auto py-3 space-y-3">
               <div className="flex items-center justify-between mb-10">
                 <h4 className="uppercase text-lg font-semibold tracking-wider text-black">
-                  New Task
+                  {initialTask ? "Edit Task":"New Task"}
                 </h4>
 
                 <div className="flex justify-end">
@@ -140,6 +204,7 @@ const NewTaskForm = ({ formModal, setFormModal }) => {
                   )}
 
                 </div>
+
                 <div className="mb-4">
                   <textarea
                     placeholder="Note (optional)"
@@ -149,7 +214,20 @@ const NewTaskForm = ({ formModal, setFormModal }) => {
                     rows={4}
                   ></textarea>
                 </div>
-                <div className="flex justify-end">
+
+                <div className="flex justify-between">
+                  <div className="">
+
+                  <button
+                    onClick={handleDelete}
+                    type="button"
+                    className="px-8 py-2 active:scale-95 bg-red-600 text-white rounded-sm"
+                  >
+                    Delete
+                  </button>
+
+                  </div>
+                <div className="">
                   <button
                     type="button"
                     className="mr-4 px-8 py-2 rounded-sm"
@@ -164,6 +242,10 @@ const NewTaskForm = ({ formModal, setFormModal }) => {
                     Save
                   </button>
                 </div>
+
+                </div>
+
+
               </form>
             </div>
           </div>

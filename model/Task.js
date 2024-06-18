@@ -1,6 +1,5 @@
 import mongoose,{Schema} from "mongoose";
 
-
 const TaskSchema = new Schema({
 
     contactPerson:{
@@ -37,8 +36,10 @@ const TaskSchema = new Schema({
         type:String,
         required:true,
     }
-
+}
+,{
+    timestamps:true
 })
 
-const Task = mongoose.model('Task',TaskSchema);
+const Task = mongoose.models.tasks || mongoose.model('tasks',TaskSchema);
 export default Task

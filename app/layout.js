@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import { TaskProvider } from "@/context/TaskProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +16,10 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         
         <>
+      <TaskProvider>
         <Header/>
         {children}
+      </TaskProvider>
         </>
         
         </body>
