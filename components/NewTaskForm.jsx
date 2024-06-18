@@ -57,7 +57,7 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
     try {
       let result
       if(initialTask){
-        result = await updateTasks(data,initialTask._id);
+        result = await updateTasks(initialTask._id,data);
       }
       else{
         result = await addTasks(data);
