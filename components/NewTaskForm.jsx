@@ -32,7 +32,7 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
       
     try {
       if(initialTask){
-        const result = await deleteTask(initialTask,initialTask._id);
+        const result = await deleteTask(initialTask._id);
         if (result.success) {
           console.log("Task saved successfully", result.task);
           reset();

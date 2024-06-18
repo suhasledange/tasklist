@@ -44,7 +44,7 @@ export const TaskProvider = ({ children }) => {
         return await response.json();
     };
 
-    const deleteTask = async (data,id) => {
+    const deleteTask = async (id) => {
         try {
             const response = await fetch(`/api/task/${id}`, {
                 method: 'DELETE',
