@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext } from 'react';
 const context = createContext();
 
 export const TaskProvider = ({ children }) => {
@@ -36,15 +36,18 @@ export const TaskProvider = ({ children }) => {
     }
 
     const updateTasks = async (id, taskData) => {
+
         const response = await fetch(`/api/task/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(taskData),
         });
         return await response.json();
+
     };
 
     const deleteTask = async (id) => {
+      
         try {
             const response = await fetch(`/api/task/${id}`, {
                 method: 'DELETE',
@@ -53,6 +56,8 @@ export const TaskProvider = ({ children }) => {
         } catch (error) {
             console.log("Error deleting task", error);
         }
+
+        
     };
    
     return (

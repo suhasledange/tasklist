@@ -1,3 +1,4 @@
+'use client'
 import TaskBlock from "@/components/TaskBlock";
 export default function Home() {
 
