@@ -19,7 +19,7 @@ import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 import { useTaskProvider } from "@/context/TaskProvider";
 
-const SalesLogTable = ({ setData, data, handleEditTask }) => {
+const SalesLogTable = ({ data, handleEditTask }) => {
   const [openFilter, setOpenFilter] = useState(null);
   const [selectedTaskTypes, setSelectedTaskTypes] = useState([]);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
@@ -28,7 +28,7 @@ const SalesLogTable = ({ setData, data, handleEditTask }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
 
-  const { fetchTasks, addTasks, updateTasks, deleteTask } = useTaskProvider();
+  const { handleDupliAndStatus } = useTaskProvider();
 
   const handleSelectedTaskTypes = (taskType) => {
     if (selectedTaskTypes.includes(taskType)) {
@@ -56,95 +56,17 @@ const SalesLogTable = ({ setData, data, handleEditTask }) => {
     }
   };
 
-  const handleDuplicateTask = async (data) => {
-    try {
-      if (confirm("Do you want to duplicate the task ?")) {
-        const {
-          contactPerson,
-          date,
-          entityName,
-          note,
-          phoneNumber,
-          status,
-          taskType,
-          time,
-        } = data;
-
-        const dataToSend = {
-          contactPerson,
-          date,
-          entityName,
-          note,
-          phoneNumber,
-          status,
-          taskType,
-          time,
-        };
-
-        const result = await addTasks(dataToSend);
-        if (result.success) {
-          console.log("Task duplicated successfully");
-          const res = await fetchTasks();
-          setData(res);
-          setSelectedRow(null);
-        } else {
-          console.error("Error duplicating saving task", result.error);
-        }
-      }
-    } catch (error) {
-      console.error("Error submitting", error);
-    }
-  };
-
-  const handleChangeStatus = async (data)=>{
-    try {
-      if (confirm("Do you want to change status ?")) {
-        const {
-          contactPerson,
-          date,
-          entityName,
-          note,
-          phoneNumber,
-          status,
-          taskType,
-          time,
-        } = data;
-
-        const dataToSend = {
-          contactPerson,
-          date,
-          entityName,
-          note,
-          phoneNumber,
-          status:status === 'Closed' ? "Open" : "Closed",
-          taskType,
-          time,
-        };
-        const result = await updateTasks(data._id,dataToSend);
-        if (result.success) {
-          console.log("status changed successfully");
-          const res = await fetchTasks();
-          setData(res);
-          setSelectedRow(null);
-        } else {
-          console.error("Error duplicating saving task", result.error);
-        }
-      }
-    } catch (error) {
-      console.error("Error submitting", error);
-    }
-  }
-
+ 
   const handleStatusOption = (option, row) => {
     switch (option) {
       case "edit":
         handleEditTask(row.original);
         break;
       case "duplicate":
-        handleDuplicateTask(row.original);
+        handleDupliAndStatus(row.original,"Do you want to duplicate this task ?",false);
         break;
       case "status":
-          handleChangeStatus(row.original)
+        handleDupliAndStatus(row.original,"Do you want to change the status ?",true);
         break;
       default:
         break;
@@ -391,7 +313,10 @@ const SalesLogTable = ({ setData, data, handleEditTask }) => {
   }, [selectedTime, setFilter]);
 
   return (
-    <div className="overflow-x-auto min-h-96 h-[26rem]">
+    <div className="overflow-x-auto min-h-96 h-[28rem]">
+      <div className="px-6 py-5">
+        Hello
+      </div>
       <table className="min-w-full" {...getTableProps()}>
         <TableHead
           headerGroups={headerGroups}

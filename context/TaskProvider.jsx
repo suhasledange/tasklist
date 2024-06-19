@@ -1,8 +1,10 @@
 'use client'
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 const context = createContext();
 
 export const TaskProvider = ({ children }) => {
+
+  const [data,setData] = useState([]);
     
 
     const fetchTasks = async()=>{
@@ -60,9 +62,77 @@ export const TaskProvider = ({ children }) => {
         
     };
 
+
+    const handleDupliAndStatus = async (data,msg,change)=>{
+      try {
+  
+        if (confirm(msg)) {
+          const {
+            contactPerson,
+            date,
+            entityName,
+            note,
+            phoneNumber,
+            status,
+            taskType,
+            time,
+          } = data;
+  
+          let updateStatus = status;
+          
+          if(change) updateStatus = status === 'Closed' ? "Open" : "Closed";
+          
+          const dataToSend = {
+            contactPerson,
+            date,
+            entityName,
+            note,
+            phoneNumber,
+            status:updateStatus,
+            taskType,
+            time,
+          };
+  
+  
+          let result;
+          if(change) result = await updateTasks(data._id,dataToSend);
+          else result = await addTasks(dataToSend);
+  
+          if (result.success) {
+            console.log("Task saved successfully");
+            const res = await fetchTasks();
+            setData(res);
+          } else {
+            console.error("Error duplicating saving task", result.error);
+          }
+        }
+      } catch (error) {
+        console.error("Error submitting", error);
+      }
+    }
+  
+
+    const fetchData = async()=>{
+
+      try {
+        const res = await fetchTasks();
+        setData(res)
+  
+      } catch (error) {
+        console.log("Error fetching tasks",error)
+      }
+  
+    }
+    useEffect(()=>{
+  
+      fetchData();
+  
+    },[])
+  
+
    
     return (
-        <context.Provider value={{ fetchTasks,addTasks,updateTasks,deleteTask }}>
+        <context.Provider value={{ fetchTasks,addTasks,updateTasks,deleteTask,handleDupliAndStatus,data,setData }}>
             {children}
         </context.Provider>
     );
