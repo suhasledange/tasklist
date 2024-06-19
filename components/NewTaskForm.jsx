@@ -232,14 +232,16 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
 
                 <div className="flex justify-between">
                   <div>
-
-                  <button
+                  {
+                    initialTask &&
+                    <button
                     onClick={handleDelete}
                     type="button"
                     className="md:px-8 px-5 py-2 active:scale-95 bg-red-600 text-white rounded-sm"
-                  >
+                    >
                     Delete
                   </button>
+                  }
 
                   </div>
                 <div>
