@@ -102,11 +102,14 @@ const SalesLogTable = ({ data, handleEditTask }) => {
           </div>
         ),
         filter: (rows, columnIds, filterValue) => {
-          const from = new Date(filterValue.from);
-          const to = new Date(filterValue.to);
+          const from = filterValue.from ? new Date(filterValue.from) : null;
+          const to = filterValue.to ? new Date(filterValue.to) : null;
           return rows.filter((row) => {
             const date = new Date(row.values.date);
-            return date >= from && date <= to;
+            if (from && to) return date >= from && date <= to;
+            if (from) return date >= from;
+            if (to) return date <= to;
+            return true;
           });
         },
       },
