@@ -172,7 +172,7 @@ export const StatusRow = ({row,selectedRow,handleSelectedRow,handleStatusOption}
             onMouseEnter={()=>setHovered(true)}
             onMouseLeave={()=>setHovered(false)}
         >
-          <span className={` cursor-context-menu font-semibold ${row.values.status === 'Open' ? 'text-red-500' : 'text-blue-500'}`}>{row.values.status}</span> 
+          <span className={` decoration-dotted underline underline-offset-[6px] cursor-context-menu font-semibold ${row.values.status === 'Open' ? 'text-red-500' : 'text-blue-500'}`}>{row.values.status}</span> 
           <StatusBox currentStatus={row.values.status} hovered={hovered}  onChangeStatus={(newStatus) => onChangeStatus(row, newStatus)}/>
         </span>
         <button
