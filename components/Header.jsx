@@ -38,7 +38,7 @@ const Header = () => {
       <div className="flex gap-7 md:gap-5 uppercase flex-wrap">
             {
                 links.map(item =>(
-                    <a className={`${item.submenu ? " font-semibold":" font-thin"} tracking-wide text-sm flex items-center justify-center gap-1`} key={item.id} href="#">{item.title} {item.submenu ?  <IoIosArrowDown className='text-sm'/> : ""} </a>
+                    <a className={`${item.submenu ? " font-semibold":" font-thin"} tracking-wide text-xs flex items-center justify-center gap-1`} key={item.id} href="#">{item.title} {item.submenu ?  <IoIosArrowDown className='text-sm'/> : ""} </a>
                 ))
             }
       </div>
