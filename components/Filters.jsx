@@ -7,9 +7,10 @@ import StatusBox from './StatusBox';
 import { useTaskProvider } from '@/context/TaskProvider';
 import { TbCirclePlus } from 'react-icons/tb';
 import AddNotesForm from './AddNotesForm';
+
+
+
 export const DateFilter = ({ dateRange ,setDateRange}) => {
-
-
   return (
     <div className="flex flex-col p-2 gap-2">
             <input

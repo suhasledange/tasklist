@@ -37,8 +37,8 @@ const AddNotesForm = ({addNoteModal,setAddNoteModel,initialTask}) => {
         console.log("Task saved successfully");
         reset();
         const res = await fetchTasks();
-        setData(res);
         setAddNoteModel(false);
+        setData(res);
       } else {
         console.error("Error saving task", result.error);
       }

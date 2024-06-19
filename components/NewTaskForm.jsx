@@ -51,8 +51,8 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
             console.log("Task deleted successfully");
             reset();
             const res = await fetchTasks();
-            setData(res);
             setFormModal(false);
+            setData(res);
           } else {
             console.error("Error saving task", result.error);
           }
@@ -80,8 +80,8 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
         console.log("Task saved successfully");
         reset();
         const res = await fetchTasks();
-        setData(res);
         setFormModal(false);
+        setData(res);
       } else {
         console.error("Error saving task", result.error);
       }

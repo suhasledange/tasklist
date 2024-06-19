@@ -4,7 +4,6 @@ import { useTable, useFilters, useSortBy } from "react-table";
 import { MdCall, MdVideocam } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { format } from "date-fns";
-import { TbCirclePlus } from "react-icons/tb";
 import {
   ContactPersonFilter,
   DateFilter,
