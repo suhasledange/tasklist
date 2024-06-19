@@ -32,7 +32,7 @@ export const EntiryFilter = ({searchTerm,setSearchTerm})=>{
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search Entity Name"
-            className="p-2 border mt-2"
+            className="p-2 border mt-2 outline-none"
           />
     )
 }
@@ -97,7 +97,7 @@ export const ContactPersonFilter = ({searchTerm,setSearchTerm})=>{
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Search Contact Person"
-        className="p-2 border mt-2"
+        className="p-2 border mt-2 outline-none"
       />
     )
 }
@@ -109,7 +109,7 @@ export const NotesFilter = ({searchTerm,setSearchTerm})=>{
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search Notes"
-            className="p-2 border mt-2"
+            className="p-2 border mt-2 outline-none"
           />
     )
 }
