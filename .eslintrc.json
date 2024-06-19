@@ -1,3 +1,9 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "react/forbid-component-props": ["error", {
+      "forbid": ["data-new-gr-c-s-check-loaded", "data-gr-ext-installed"]
+    }]
+  }
 }
+  
