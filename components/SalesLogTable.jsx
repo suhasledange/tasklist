@@ -18,6 +18,7 @@ import {
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 import { useTaskProvider } from "@/context/TaskProvider";
+import { FaFilter } from "react-icons/fa";
 
 const SalesLogTable = ({ data, handleEditTask }) => {
   const [openFilter, setOpenFilter] = useState(null);
@@ -314,8 +315,8 @@ const SalesLogTable = ({ data, handleEditTask }) => {
 
   return (
     <div className="overflow-x-auto min-h-96 h-[28rem]">
-      <div className="px-6 py-5">
-        Hello
+      <div className="px-6 pb-5 pt-4">
+        <span className="text-gray-700 text-sm ">Use the icon {<FaFilter className="text-gray-500 text-xs inline-block"/>} next to the table titles to apply filters</span>
       </div>
       <table className="min-w-full" {...getTableProps()}>
         <TableHead

@@ -43,8 +43,8 @@ const TaskBlock = () => {
                 <input type='text' placeholder='search' className='p-2 outline-none rounded-md w-full'/>
             </div>
         </div>
-        <div className='bg-white'>
-        
+        <div className='bg-white py-3'>
+          
         {
           data?.length ? (
           <SalesLogTable data={data} handleEditTask={handleEditTask}/>
