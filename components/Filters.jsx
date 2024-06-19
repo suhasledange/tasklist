@@ -1,7 +1,10 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import { MdCall, MdVideocam } from 'react-icons/md';
 import { FaLocationDot } from 'react-icons/fa6';
 import { IoIosArrowDown } from 'react-icons/io';
+import StatusBox from './StatusBox';
+import { useTaskProvider } from '@/context/TaskProvider';
 export const DateFilter = ({ dateRange ,setDateRange}) => {
 
 
@@ -143,14 +146,32 @@ export const StatusFilter = ({handleSelectedStatuses,selectedStatuses})=>{
 
 export const StatusRow = ({row,selectedRow,handleSelectedRow,handleStatusOption})=>{
 
-    
 
+  const {handleChangeStatus} = useTaskProvider();
+
+  const onChangeStatus = async (row, newStatus) => {
+      
+      try {
+
+        await handleChangeStatus(row.original,newStatus);
+
+      } catch (error) {
+        console.log("error updateing status",error)
+      }
+
+  };
+
+  const [hovered,setHovered] = useState(false);
 
     return (
 
         <div className="flex justify-between items-center relative">
-        <span className={`font-semibold ${row.values.status === 'Open' ? 'text-red-500' : 'text-blue-500'}`}>
-          {row.values.status}
+        <span 
+            onMouseEnter={()=>setHovered(true)}
+            onMouseLeave={()=>setHovered(false)}
+        >
+          <span className={` cursor-context-menu font-semibold ${row.values.status === 'Open' ? 'text-red-500' : 'text-blue-500'}`}>{row.values.status}</span> 
+          <StatusBox currentStatus={row.values.status} hovered={hovered}  onChangeStatus={(newStatus) => onChangeStatus(row, newStatus)}/>
         </span>
         <button
           className="ml-2 gap-1 border p-1 bg-gray-100 flex items-center justify-center"

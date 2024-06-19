@@ -112,6 +112,50 @@ export const TaskProvider = ({ children }) => {
     }
   
 
+    const handleChangeStatus = async(data,newStatus)=>{
+      try {
+  
+        if (confirm("Do you want to change status ?")) {
+          const {
+            contactPerson,
+            date,
+            entityName,
+            note,
+            phoneNumber,
+            status,
+            taskType,
+            time,
+          } = data;
+  
+          if(status === newStatus) return;
+          
+          const dataToSend = {
+            contactPerson,
+            date,
+            entityName,
+            note,
+            phoneNumber,
+            status:newStatus,
+            taskType,
+            time,
+          };
+
+          const result = await updateTasks(data._id,dataToSend);
+
+          if (result.success) {
+            console.log("Task saved successfully");
+            const res = await fetchTasks();
+            setData(res);
+          } else {
+            console.error("Error duplicating saving task", result.error);
+          }
+        }
+      } catch (error) {
+        console.error("Error submitting", error);
+      }
+    }
+
+
     const fetchData = async()=>{
 
       try {
@@ -132,7 +176,7 @@ export const TaskProvider = ({ children }) => {
 
    
     return (
-        <context.Provider value={{ fetchTasks,addTasks,updateTasks,deleteTask,handleDupliAndStatus,data,setData }}>
+        <context.Provider value={{ fetchTasks,addTasks,updateTasks,deleteTask,handleDupliAndStatus,handleChangeStatus,data,setData }}>
             {children}
         </context.Provider>
     );

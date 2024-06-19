@@ -40,11 +40,10 @@ const TaskBlock = () => {
                 </button>
             </div>
             <div className='flex-end w-full md:w-[40%]'>
-                <input type='text' placeholder='search' className='p-2 outline-none rounded-md w-full'/>
+                <input type='text' placeholder='search' className='p-2 px-5 outline-none rounded-md w-full'/>
             </div>
         </div>
-        <div className='bg-white py-3'>
-          
+        <div className={`bg-white ${data.length ? "py-3":""}`}>
         {
           data?.length ? (
           <SalesLogTable data={data} handleEditTask={handleEditTask}/>
