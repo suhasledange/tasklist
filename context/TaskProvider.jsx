@@ -59,6 +59,7 @@ export const TaskProvider = ({ children }) => {
 
         
     };
+
    
     return (
         <context.Provider value={{ fetchTasks,addTasks,updateTasks,deleteTask }}>

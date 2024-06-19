@@ -7,6 +7,7 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
   const { register, handleSubmit, setValue, watch, formState: { errors },reset } = useForm();
   const status = watch("status");
 
+  const {fetchTasks,addTasks,updateTasks,deleteTask} = useTaskProvider();
 
 
   const setInitialTaskValues = ()=>{
@@ -39,9 +40,6 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
   }, [setValue, initialTask]);
 
 
-  const {fetchTasks,addTasks,updateTasks,deleteTask} = useTaskProvider();
-
-
 
   const handleDelete = async()=>{
       
@@ -50,7 +48,7 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
         if(confirm("Do you want to delete this task ?")){
           const result = await deleteTask(initialTask._id);
           if (result.success) {
-            console.log("Task saved successfully", result.task);
+            console.log("Task deleted successfully");
             reset();
             const res = await fetchTasks();
             setData(res);
@@ -79,7 +77,7 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
       }
 
       if (result.success) {
-        console.log("Task saved successfully", result.task);
+        console.log("Task saved successfully");
         reset();
         const res = await fetchTasks();
         setData(res);

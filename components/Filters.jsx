@@ -171,7 +171,7 @@ export const StatusRow = ({row,selectedRow,handleSelectedRow,handleStatusOption}
                 Duplicate
               </li>
 
-              <li className="cursor-pointer" onClick={() => handleStatusOption('close', row)}>
+              <li className="cursor-pointer" onClick={() => handleStatusOption('status', row)}>
                 Change Status to { row.values.status === 'Open' ? "Closed" : "Open" }
               </li>
 

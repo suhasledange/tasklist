@@ -64,7 +64,7 @@ const TaskBlock = () => {
         
         {
           data?.length ? (
-          <SalesLogTable data={data} handleEditTask={handleEditTask}/>
+          <SalesLogTable setData={setData} data={data} handleEditTask={handleEditTask}/>
           ):(
             <div className='px-6 py-4'>Loading...</div>
           )
