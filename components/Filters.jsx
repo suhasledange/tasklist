@@ -220,7 +220,11 @@ return (
     </button>
   ) : (
     <span>
-        {row.values.note}
+        { 
+       row.values.note && row.values.note.length > 30 
+    ? `${row.values.note.slice(0, 35)}...` 
+    : (row.values.note || '')
+}
      
       </span>
   )}

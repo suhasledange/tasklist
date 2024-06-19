@@ -8,7 +8,7 @@ const TableHead = ({ headerGroups, handleOpenFilter, openFilter }) => {
         <tr {...headerGroup.getHeaderGroupProps()} key={`header-${index}`}>
           {headerGroup.headers.map((column) => (
             <th
-              className="px-3 py-3 text-left text-sm font-medium text-gray-500 whitespace-nowrap tracking-wider relative"
+              className={`px-4 py-2 text-left text-sm font-medium text-gray-500 whitespace-nowrap tracking-wider relative ${column.id === 'contactPerson' ? "px-1":""}`}
               key={column.id}
             >
               <div className="flex items-center">

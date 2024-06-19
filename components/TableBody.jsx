@@ -41,7 +41,7 @@ const TableBody = ({ setOpenFilter, rows, prepareRow }) => {
             {showDateSeparator && (
               <tr>
                 <td colSpan={row.cells.length}>
-                  <div className="flex justify-start gap-3 text-[0.83rem] items-center py-[0.25rem] px-6">
+                  <div className="flex justify-start gap-3 text-[0.78rem] items-center py-[0.25rem] px-4">
                     <span className="text-gray-800 font-bold">{formattedDate}</span>
                     <span className="text-gray-500">{calculateDaysAgo(currentDate)} </span>
                     <span className='text-gray-500 ml-1'>{openTasksCount > 0 && `${openTasksCount} Open`}</span>
@@ -52,7 +52,7 @@ const TableBody = ({ setOpenFilter, rows, prepareRow }) => {
             )}
             <tr {...row.getRowProps()} key={`row-${row.id}`}>
               {row.cells.map((cell) => (
-                <td className="px-6 py-[0.3rem] text-sm whitespace-nowrap" key={cell.column.id}>
+                <td className="px-4 py-[0.3rem] text-sm whitespace-nowrap" key={cell.column.id}>
                   {cell.render('Cell')}
                 </td>
               ))}

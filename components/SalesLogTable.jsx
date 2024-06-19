@@ -101,7 +101,7 @@ const SalesLogTable = ({ data, handleEditTask }) => {
         Header: "Entity Name",
         accessor: "entityName",
         Cell: ({ value }) => (
-          <span className="text-blue font-semibold">{value}</span>
+          <span className="text-blue whitespace-break-spaces w-[15rem] font-semibold inline-block">{value}</span>
         ),
         Filter: ({ column }) => (
           <EntiryFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -182,6 +182,9 @@ const SalesLogTable = ({ data, handleEditTask }) => {
       {
         Header: "Contact Person",
         accessor: "contactPerson",
+        Cell: ({ value }) => (
+          <span className="whitespace-break-spaces w-[10rem] inline-block">{value}</span>
+        ),
         Filter: ({ column }) => (
           <ContactPersonFilter
             searchTerm={searchTerm}
