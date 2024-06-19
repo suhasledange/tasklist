@@ -10,6 +10,7 @@ import {
   DateFilter,
   EntiryFilter,
   NotesFilter,
+  NotesRow,
   StatusFilter,
   StatusRow,
   TaskTypeFilter,
@@ -199,16 +200,7 @@ const SalesLogTable = ({ data, handleEditTask }) => {
         Header: "Notes",
         accessor: "note",
         Cell: ({ row }) => (
-          <>
-            {row.values.note === "" ? (
-              <button className="active:scale-95 bg-gray-100 rounded-sm py-2 px-4 gap-2 flex items-center justify-center text-md">
-                <TbCirclePlus className="text-xl text-blue" />
-                Add Note
-              </button>
-            ) : (
-              <span>{row.values.note}</span>
-            )}
-          </>
+               <NotesRow row={row}/>
         ),
         Filter: ({ column }) => (
           <NotesFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />

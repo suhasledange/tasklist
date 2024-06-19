@@ -5,6 +5,8 @@ import { FaLocationDot } from 'react-icons/fa6';
 import { IoIosArrowDown } from 'react-icons/io';
 import StatusBox from './StatusBox';
 import { useTaskProvider } from '@/context/TaskProvider';
+import { TbCirclePlus } from 'react-icons/tb';
+import AddNotesForm from './AddNotesForm';
 export const DateFilter = ({ dateRange ,setDateRange}) => {
 
 
@@ -202,4 +204,27 @@ export const StatusRow = ({row,selectedRow,handleSelectedRow,handleStatusOption}
       </div>
    
         )
+}
+
+export const NotesRow = ({row})=>{
+
+  const [addNoteModal,setAddNoteModel] = useState(false);
+
+return (
+  <div>
+  {row.values.note === "" ? (
+    <button onClick={()=>setAddNoteModel(true)} className="active:scale-95 bg-gray-100 rounded-sm py-2 px-4 gap-2 flex items-center justify-center text-md">
+      <TbCirclePlus className="text-xl text-blue" />
+      Add Note
+    </button>
+  ) : (
+    <span>
+        {row.values.note}
+     
+      </span>
+  )}
+ <AddNotesForm addNoteModal={addNoteModal} setAddNoteModel={setAddNoteModel} initialTask={row.original}/>
+</div>
+
+)
 }
