@@ -115,20 +115,21 @@ export const TaskProvider = ({ children }) => {
     const handleChangeStatus = async(data,newStatus)=>{
       try {
   
+        const {
+          contactPerson,
+          date,
+          entityName,
+          note,
+          phoneNumber,
+          status,
+          taskType,
+          time,
+        } = data;
+
+        if(status === newStatus) return;
+        else {
         if (confirm("Do you want to change status ?")) {
-          const {
-            contactPerson,
-            date,
-            entityName,
-            note,
-            phoneNumber,
-            status,
-            taskType,
-            time,
-          } = data;
-  
-          if(status === newStatus) return;
-          
+         
           const dataToSend = {
             contactPerson,
             date,
@@ -150,6 +151,7 @@ export const TaskProvider = ({ children }) => {
             console.error("Error duplicating saving task", result.error);
           }
         }
+      }
       } catch (error) {
         console.error("Error submitting", error);
       }
