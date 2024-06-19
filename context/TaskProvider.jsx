@@ -157,7 +157,6 @@ export const TaskProvider = ({ children }) => {
       }
     }
 
-
     const fetchData = async()=>{
 
       try {
