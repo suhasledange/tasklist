@@ -214,8 +214,8 @@ export const NotesRow = ({row})=>{
 return (
   <div>
   {row.values.note === "" ? (
-    <button onClick={()=>setAddNoteModel(true)} className="active:scale-95 bg-gray-100 rounded-sm py-2 px-4 gap-2 flex items-center justify-center text-md">
-      <TbCirclePlus className="text-xl text-blue" />
+    <button onClick={()=>setAddNoteModel(true)} className="active:scale-95 bg-gray-100 rounded-sm py-2 px-4 gap-2 flex items-center justify-center text-sm">
+      <TbCirclePlus className="text-md text-blue"/>
       Add Note
     </button>
   ) : (

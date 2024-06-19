@@ -21,6 +21,7 @@ import { useTaskProvider } from "@/context/TaskProvider";
 import { FaFilter } from "react-icons/fa";
 
 const SalesLogTable = ({ data, handleEditTask }) => {
+
   const [openFilter, setOpenFilter] = useState(null);
   const [selectedTaskTypes, setSelectedTaskTypes] = useState([]);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
@@ -79,7 +80,7 @@ const SalesLogTable = ({ data, handleEditTask }) => {
     () => [
       {
         Header: "Date",
-        accessor: "date",
+        accessor: "createdAt",
         Cell: ({ value }) => format(new Date(value), "dd/MM/yyyy"),
         Filter: ({ column }) => (
           <DateFilter dateRange={dateRange} setDateRange={setDateRange} />
@@ -88,7 +89,7 @@ const SalesLogTable = ({ data, handleEditTask }) => {
           const from = filterValue.from ? new Date(filterValue.from) : null;
           const to = filterValue.to ? new Date(filterValue.to) : null;
           return rows.filter((row) => {
-            const date = new Date(row.values.date);
+            const date = new Date(row.original.createdAt);
             if (from && to) return date >= from && date <= to;
             if (from) return date >= from;
             if (to) return date <= to;
@@ -278,9 +279,9 @@ const SalesLogTable = ({ data, handleEditTask }) => {
 
   useEffect(() => {
     if (dateRange.from || dateRange.to) {
-      setFilter("date", dateRange);
+      setFilter("createdAt", dateRange);
     } else {
-      setFilter("date", undefined);
+      setFilter("createdAt", undefined);
     }
   }, [dateRange, setFilter]);
 
