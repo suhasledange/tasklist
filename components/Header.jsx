@@ -8,7 +8,7 @@ const Header = () => {
 
   return (
 
-     <header className="bg-[#004b6e] text-white flex sticky top-0 items-center w-full justify-center py-3">
+     <header className="bg-blue text-white flex sticky top-0 items-center w-full justify-center py-3">
     <nav className='flex items-center justify-between px-5 md:px-10 w-full h-full gap-5 md:gap-20'>
 
       
@@ -21,14 +21,14 @@ const Header = () => {
       
       <div className="flex">
       
-        <select className="bg-gray-300 outline-none text-[#0f2e3c] md:p-2 py-2 px-1 rounded-s-md h-full">
+        <select className="bg-gray-300 outline-none text-blue md:p-2 py-2 px-1 rounded-s-md h-full">
           <option value="companies">Companies</option>
         </select>
         
         <input
           type="text"
           placeholder=""
-          className=" left-40  bg-white text-[#004b6e] outline-none p-2 h-[2.278rem] rounded-e-md w-full "
+          className=" left-40  bg-white text-blue outline-none p-2 h-[2.278rem] rounded-e-md w-full "
         />
       
       </div>
@@ -44,12 +44,11 @@ const Header = () => {
       </div>
       </div>
 
-
       <div className="flex flex-col items-end gap-4">
 
-            <div className='flex items-center gap-3'>
-                    <div>
-                        <h1 className='text-sm'>FirstName LastName</h1>
+            <div className='flex items-center md:gap-3 gap-2'>
+                    <div className='md:space-y-0 space-y-1'>
+                        <h1 className='text-sm flex md:flex-row md:gap-1 gap-0  flex-col'>FirstName <span>LastName</span> </h1>
                         <p className='text-xs'>Company Name</p>
                     </div>
                     <div className=' cursor-pointer rounded-full bg-white w-10 h-10'>

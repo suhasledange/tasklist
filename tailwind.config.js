@@ -8,6 +8,12 @@ module.exports = {
   theme: {
     extend: {
 
+      colors:{
+        blue:{
+          DEFAULT:'#004b6e'
+        }
+      },
+
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

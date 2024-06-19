@@ -7,7 +7,9 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
   const { register, handleSubmit, setValue, watch, formState: { errors },reset } = useForm();
   const status = watch("status");
 
-  useEffect(() => {
+
+
+  const setInitialTaskValues = ()=>{
 
     if (initialTask) {
       setValue("entityName", initialTask.entityName);
@@ -19,37 +21,50 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
       setValue("note", initialTask.note);
       setValue("status", initialTask.status);
     } else {
+      setValue("entityName", "");
+      setValue("date", "");
+      setValue("time", "");
+      setValue("taskType", "Call");
+      setValue("phoneNumber", "");
+      setValue("contactPerson","");
+      setValue("note", "");
       setValue("status", "Open");
     }
+  }
 
+  useEffect(() => {
+
+    setInitialTaskValues()
+   
   }, [setValue, initialTask]);
 
 
   const {fetchTasks,addTasks,updateTasks,deleteTask} = useTaskProvider();
 
 
+
   const handleDelete = async()=>{
       
     try {
       if(initialTask){
-        const result = await deleteTask(initialTask._id);
-        if (result.success) {
-          console.log("Task saved successfully", result.task);
-          reset();
-          const res = await fetchTasks();
-          setData(res);
-          setFormModal(false);
-        } else {
-          console.error("Error saving task", result.error);
+        if(confirm("Do you want to delete this task ?")){
+          const result = await deleteTask(initialTask._id);
+          if (result.success) {
+            console.log("Task saved successfully", result.task);
+            reset();
+            const res = await fetchTasks();
+            setData(res);
+            setFormModal(false);
+          } else {
+            console.error("Error saving task", result.error);
+          }
         }
-
+        else return
       }
     } catch (error) {
       console.error("Error submitting form", error);
     }
     
- 
- 
   }
 
   const onSubmit = async(data) => {
@@ -138,9 +153,10 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
                     <p className="text-red-500 text-sm mt-1">Entity name is required.</p>
                   )}
                 </div>
-                <div className="mb-4 flex items-center justify-center gap-10">
+                <div className="mb-4 flex items-center justify-center gap-3 md:gap-8">
                   <input
                     type="date"
+                    placeholder="Date"
                     className="mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 outline-none bg-gray-100 p-4 focus:border-indigo-500 sm:text-sm"
                     {...register("date", { required: true })}
                   />
@@ -150,6 +166,7 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
 
                   <input
                     type="time"
+                    placeholder="Time"
                     className="mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 outline-none bg-gray-100 p-4 focus:border-indigo-500 sm:text-sm"
                     {...register("time", { required: true })}
                   />
@@ -216,28 +233,28 @@ const NewTaskForm = ({ setData,formModal, setFormModal ,initialTask}) => {
                 </div>
 
                 <div className="flex justify-between">
-                  <div className="">
+                  <div>
 
                   <button
                     onClick={handleDelete}
                     type="button"
-                    className="px-8 py-2 active:scale-95 bg-red-600 text-white rounded-sm"
+                    className="md:px-8 px-5 py-2 active:scale-95 bg-red-600 text-white rounded-sm"
                   >
                     Delete
                   </button>
 
                   </div>
-                <div className="">
+                <div>
                   <button
                     type="button"
-                    className="mr-4 px-8 py-2 rounded-sm"
+                    className="mr-4 border border-slate-500 md:px-8 px-5 py-2 rounded-sm"
                     onClick={() => setFormModal(false)}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-8 py-2 active:scale-95 bg-[#004b6e] text-white rounded-sm"
+                    className="md:px-8 px-5 py-2 active:scale-95 bg-[#004b6e] text-white rounded-sm"
                   >
                     Save
                   </button>
