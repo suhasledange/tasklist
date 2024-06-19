@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TableBody = ({setOpenFilter,rows,prepareRow,}) => {
+const TableBody = ({setOpenFilter,rows,prepareRow}) => {
   return (
     <tbody onClick={() => setOpenFilter(null)} className="bg-white">
           {rows.map((row) => {

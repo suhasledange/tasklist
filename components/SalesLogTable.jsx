@@ -309,7 +309,7 @@ const SalesLogTable = ({ data, handleEditTask }) => {
   }, [selectedTime, setFilter]);
 
   return (
-    <div className="overflow-x-auto min-h-72">
+    <div className="overflow-x-auto min-h-96 h-[26rem]">
       <table className="min-w-full" {...getTableProps()}>
         <TableHead
           headerGroups={headerGroups}
