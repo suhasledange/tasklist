@@ -330,7 +330,6 @@ const SalesLogTable = ({ data=[], handleEditTask }) => {
     }
   }, [selectedStatuses, setFilter]);
 
-
   useEffect(() => {
     if (dateRange.from || dateRange.to) {
       setFilter("createdAt", dateRange);

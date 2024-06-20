@@ -228,7 +228,9 @@ return (
      
       </span>
   )}
- <AddNotesForm addNoteModal={addNoteModal} setAddNoteModel={setAddNoteModel} initialTask={row.original}/>
+ {
+  addNoteModal && <AddNotesForm addNoteModal={addNoteModal} setAddNoteModel={setAddNoteModel} rowData={row.original}/>
+ }
 </div>
 
 )

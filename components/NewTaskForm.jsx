@@ -9,6 +9,7 @@ const NewTaskForm = ({ setData, formModal, setFormModal, initialTask }) => {
   const status = watch("status");
 
   const { fetchTasks, addTasks, updateTasks, deleteTask } = useTaskProvider();
+  
   const [loading,setLoading] = useState(false);
   const [delLoading,setDelLoading] = useState(false);
 

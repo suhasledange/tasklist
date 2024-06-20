@@ -4,38 +4,57 @@ import { CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-const AddNotesForm = ({addNoteModal,setAddNoteModel,initialTask}) => {
+const AddNotesForm = ({addNoteModal,setAddNoteModel,rowData}) => {
   const { register, handleSubmit, setValue, formState: { errors },reset } = useForm();
 
   const {fetchTasks,updateTasks,setData} = useTaskProvider();
   const [loading,setLoading] = useState(false);
 
-  const setInitialTaskValues = ()=>{
+  const [hour, setHour] = useState("12");
+  const [minute, setMinute] = useState("00");
+  const [period, setPeriod] = useState("PM");
 
-      setValue("entityName", initialTask.entityName);
-      setValue("date", new Date(initialTask.date).toISOString().substring(0, 10));
-      setValue("time", initialTask.time);
-      setValue("taskType", initialTask.taskType);
-      setValue("phoneNumber", initialTask.phoneNumber);
-      setValue("contactPerson", initialTask.contactPerson);
-      setValue("note", initialTask.note);
-      setValue("status", initialTask.status);
+  const setrowDataValues = ()=>{
+
+      setValue("entityName", rowData.entityName);
+      setValue("date", new Date(rowData.date).toISOString().substring(0, 10));
+      
+      const timeComponents = rowData.time.match(/(\d+):(\d+) (\w+)/);
+      if (timeComponents && timeComponents.length === 4) {
+        const hour = timeComponents[1];
+        const minute = timeComponents[2];
+        const period = timeComponents[3];
+  
+        setHour(hour);
+        setMinute(minute);
+        setPeriod(period);
+      } else {
+        setHour("12");
+        setMinute("00");
+        setPeriod("PM");
+      }
+
+      setValue("taskType", rowData.taskType);
+      setValue("phoneNumber", rowData.phoneNumber);
+      setValue("contactPerson", rowData.contactPerson);
+      setValue("note", rowData.note);
+      setValue("status", rowData.status);
     }
 
   useEffect(() => {
 
-    setInitialTaskValues()
+    setrowDataValues()
    
   }, [setValue]);
 
 
   const onSubmit = async(data) => {
-    
-    try {
+    data.time = `${hour}:${minute} ${period}`;
 
+    try {
       setLoading(true);
 
-       const result = await updateTasks(initialTask._id,data);
+       const result = await updateTasks(rowData._id,data);
     
       if (result.success) {
         console.log("Task saved successfully");
