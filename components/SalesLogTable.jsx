@@ -33,19 +33,45 @@ const SalesLogTable = ({ data=[], handleEditTask }) => {
 
   const { handleDupliAndStatus } = useTaskProvider();
 
-  const updateAppliedFilters = (filterType, filterValue) => {
-    setAppliedFilters((prev) => {
-      const existingFilter = prev.find(filter => filter.type === filterType);
+  const updateAppliedFilters = (type, value) => {
+    setAppliedFilters((prevFilters) => {
+      const existingFilter = prevFilters.find((filter) => filter.type === type);
       if (existingFilter) {
-        return prev.map(filter => filter.type === filterType ? { type: filterType, value: filterValue } : filter);
-      } else {
-        return [...prev, { type: filterType, value: filterValue }];
+        return prevFilters.map((filter) =>
+          filter.type === type ? { ...filter, value } : filter
+        );
       }
+      return [...prevFilters, { type, value }];
     });
   };
 
   const removeAppliedFilter = (filterType) => {
     setAppliedFilters((prev) => prev.filter(filter => filter.type !== filterType));
+    setFilterByType(filterType, undefined);
+  };
+
+  const setFilterByType = (filterType, value) => {
+    switch (filterType) {
+      case "Task Type":
+        setFilter("taskType", value);
+        break;
+      case "Status":
+        setFilter("status", value);
+        break;
+      case "Date":
+        setFilter("createdAt", value);
+        break;
+      case "Search":
+        setFilter("entityName", value);
+        setFilter("contactPerson", value);
+        setFilter("note", value);
+        break;
+      case "Time":
+        setFilter("time", value);
+        break;
+      default:
+        break;
+    }
   };
 
   const handleSelectedTaskTypes = (taskType) => {
@@ -287,24 +313,31 @@ const SalesLogTable = ({ data=[], handleEditTask }) => {
   useEffect(() => {
     if (selectedTaskTypes.length > 0) {
       setFilter("taskType", selectedTaskTypes);
+      updateAppliedFilters("Task Type", selectedTaskTypes.join(", "));
     } else {
       setFilter("taskType", undefined);
+      removeAppliedFilter("Task Type");
     }
   }, [selectedTaskTypes, setFilter]);
 
   useEffect(() => {
     if (selectedStatuses.length > 0) {
       setFilter("status", selectedStatuses);
+      updateAppliedFilters("Status", selectedStatuses.join(", "));
     } else {
       setFilter("status", undefined);
+      removeAppliedFilter("Status");
     }
   }, [selectedStatuses, setFilter]);
+
 
   useEffect(() => {
     if (dateRange.from || dateRange.to) {
       setFilter("createdAt", dateRange);
+      updateAppliedFilters("Date", `${dateRange.from} - ${dateRange.to}`);
     } else {
       setFilter("createdAt", undefined);
+      removeAppliedFilter("Date");
     }
   }, [dateRange, setFilter]);
 
@@ -313,40 +346,44 @@ const SalesLogTable = ({ data=[], handleEditTask }) => {
       setFilter("entityName", searchTerm);
       setFilter("contactPerson", searchTerm);
       setFilter("note", searchTerm);
+      updateAppliedFilters("Search", searchTerm);
     } else {
       setFilter("entityName", undefined);
       setFilter("contactPerson", undefined);
       setFilter("note", undefined);
+      removeAppliedFilter("Search");
     }
   }, [searchTerm, setFilter]);
 
   useEffect(() => {
     if (selectedTime) {
       setFilter("time", selectedTime);
+      updateAppliedFilters("Time", selectedTime);
     } else {
       setFilter("time", undefined);
+      removeAppliedFilter("Time");
     }
   }, [selectedTime, setFilter]);
 
   return (
     <div className="overflow-x-auto min-h-96 h-[28rem]">
-      <div className="px-4 pb-5 pt-4">
-
-
-      {
-
-       appliedFilters.length ? (
-         <div className="flex items-center justify-start gap-3">
-            <AppliedFilter />
-        </div>   
-       ) : (
-
-         <span className="text-gray-700 text-sm ">Use the icon {<FaFilter className="text-gray-500 text-xs inline-block"/>} next to the table titles to apply filters</span>
-         
-        )
-      }
+    
+    <div className="px-4 pb-5 pt-4">
+        
+        
+        <div className="flex items-center justify-start gap-3">
+          {appliedFilters.map((filter, index) => (
+            <AppliedFilter key={index} filter={filter} onRemove={removeAppliedFilter}/>
+          ))}
+        </div>
+        {appliedFilters.length === 0 && (
+          <span className="text-gray-700 text-sm py-1">
+            Use the icon {<FaFilter className="text-gray-500 text-xs inline-block"/>} next to the table titles to apply filters
+          </span>
+        )}
 
       </div>
+
       <table className="min-w-full" {...getTableProps()}>
         <TableHead
           headerGroups={headerGroups}

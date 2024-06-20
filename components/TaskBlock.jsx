@@ -21,7 +21,7 @@ const TaskBlock = () => {
     setFormModal(true);
   };
 
-  const filteredData = data.filter((item) => {
+  const filteredData = data?.filter((item) => {
     const lowerCaseSearch = searchTerm.toLowerCase();
     return (
       item.entityName.toLowerCase().includes(lowerCaseSearch) ||
