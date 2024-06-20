@@ -33,7 +33,8 @@ This project is a task management system developed using Next.js and MongoDB Atl
    git clone https://github.com/suhasledange/tasklist.git
    cd tasklist
 
-2. Install dependencies.
+2. Install dependencies:
+    ```bash
     npm install
     # or
     yarn install
