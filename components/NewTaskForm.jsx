@@ -185,7 +185,7 @@ const NewTaskForm = ({ setData, formModal, setFormModal, initialTask }) => {
                     <select
                       value={hour}
                       onChange={(e) => setHour(e.target.value)}
-                      className="mt-1 rounded-md shadow-sm focus:ring-indigo-500 outline-none bg-gray-100 p-4 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 rounded-l-md outline-none bg-gray-100 p-4 sm:text-sm"
                     >
                       {Array.from({ length: 12 }, (_, i) => i + 1).map(h => (
                         <option key={h} value={h < 10 ? `0${h}` : h}>{h < 10 ? `0${h}` : h}</option>
@@ -194,7 +194,7 @@ const NewTaskForm = ({ setData, formModal, setFormModal, initialTask }) => {
                     <select
                       value={minute}
                       onChange={(e) => setMinute(e.target.value)}
-                      className="mt-1 rounded-md shadow-sm focus:ring-indigo-500 outline-none bg-gray-100 p-4 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 outline-none bg-gray-100 p-4 sm:text-sm"
                     >
                       {Array.from({ length: 60 }, (_, i) => (i < 10 ? `0${i}` : i)).map(m => (
                         <option key={m} value={m}>{m}</option>
@@ -203,7 +203,7 @@ const NewTaskForm = ({ setData, formModal, setFormModal, initialTask }) => {
                     <select
                       value={period}
                       onChange={(e) => setPeriod(e.target.value)}
-                      className="mt-1 rounded-md shadow-sm focus:ring-indigo-500 outline-none bg-gray-100 p-4 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 rounded-r-md outline-none bg-gray-100 p-4 sm:text-sm"
                     >
                       {["AM", "PM"].map(p => (
                         <option key={p} value={p}>{p}</option>

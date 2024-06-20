@@ -44,7 +44,9 @@ const TableHead = ({ headerGroups, handleOpenFilter, openFilter }) => {
                       ? "Task Type"
                       : column.id.charAt(0).toUpperCase() + column.id.slice(1)}
                   </h1>
+
                   {column.render("Filter")}
+                
                 </div>
               )}
             </th>

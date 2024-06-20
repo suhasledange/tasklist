@@ -55,7 +55,7 @@ const TaskBlock = () => {
           <div className="flex-end w-full md:w-[40%]">
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search Entity, Contact Person & Notes"
               className="p-2 px-5 outline-none rounded-md w-full"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
