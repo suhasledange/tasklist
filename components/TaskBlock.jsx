@@ -51,7 +51,7 @@ const TaskBlock = () => {
             />
           </div>
         </div>
-        <div className={`bg-white ${data.length ? "py-3" : ""}`}>
+        <div className={`bg-white ${data.length ? "pt-3" : ""}`}>
           {loading ? (
             <LinearProgress />
           ) : data.length === 0 ? (

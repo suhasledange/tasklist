@@ -315,7 +315,10 @@ const SalesLogTable = ({ data=[], handleEditTask }) => {
   return (
     <div className="overflow-x-auto min-h-96 h-[28rem]">
       <div className="px-4 pb-5 pt-4">
+        
         <span className="text-gray-700 text-sm ">Use the icon {<FaFilter className="text-gray-500 text-xs inline-block"/>} next to the table titles to apply filters</span>
+
+
       </div>
       <table className="min-w-full" {...getTableProps()}>
         <TableHead
