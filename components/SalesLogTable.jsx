@@ -264,7 +264,7 @@ const SalesLogTable = ({ data=[], handleEditTask }) => {
     if (openFilter === columnId) {
       setOpenFilter(null);
     } else {
-      setOpenFilter(columnId);
+      if(columnId !== 'note' && columnId !== 'entityName' && columnId !== 'contactPerson') setOpenFilter(columnId);
     }
   };
 
