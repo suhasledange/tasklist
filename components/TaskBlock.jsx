@@ -1,14 +1,15 @@
-"use client";
 import React, { useState } from "react";
 import { TbCirclePlus } from "react-icons/tb";
 import SalesLogTable from "./SalesLogTable";
 import NewTaskForm from "./NewTaskForm";
 import { useTaskProvider } from "@/context/TaskProvider";
 import { LinearProgress } from "@mui/material";
+
 const TaskBlock = () => {
   const { loading, data, setData } = useTaskProvider();
   const [formModal, setFormModal] = useState(false);
   const [initialTask, setInitialTask] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleEditTask = (task) => {
     setInitialTask(task);
@@ -20,6 +21,14 @@ const TaskBlock = () => {
     setFormModal(true);
   };
 
+  const filteredData = data.filter((item) => {
+    const lowerCaseSearch = searchTerm.toLowerCase();
+    return (
+      item.entityName.toLowerCase().includes(lowerCaseSearch) ||
+      item.contactPerson.toLowerCase().includes(lowerCaseSearch) ||
+      item.note.toLowerCase().includes(lowerCaseSearch)
+    );
+  });
 
   return (
     <>
@@ -46,18 +55,20 @@ const TaskBlock = () => {
           <div className="flex-end w-full md:w-[40%]">
             <input
               type="text"
-              placeholder="search"
+              placeholder="Search"
               className="p-2 px-5 outline-none rounded-md w-full"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
-        <div className={`bg-white ${data.length ? "pt-3" : ""}`}>
+        <div className={`bg-white ${filteredData.length ? "pt-3" : ""}`}>
           {loading ? (
             <LinearProgress />
-          ) : data.length === 0 ? (
+          ) : filteredData.length === 0 ? (
             <div className="px-4 py-4">No Data found</div>
           ) : (
-            <SalesLogTable data={data} handleEditTask={handleEditTask} />
+            <SalesLogTable data={filteredData} handleEditTask={handleEditTask} />
           )}
         </div>
       </div>
