@@ -52,7 +52,7 @@ const TableBody = ({ setOpenFilter, rows, prepareRow }) => {
             )}
             <tr {...row.getRowProps()} key={`row-${row.id}`}>
               {row.cells.map((cell) => (
-                <td className="px-4 py-[0.3rem] text-sm whitespace-nowrap" key={cell.column.id}>
+                <td className="px-4 py-[0.35rem] text-sm whitespace-nowrap" key={cell.column.id}>
                   {cell.render('Cell')}
                 </td>
               ))}

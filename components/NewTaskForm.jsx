@@ -170,7 +170,7 @@ const NewTaskForm = ({ setData, formModal, setFormModal, initialTask }) => {
                     <p className="text-red-500 text-sm mt-1">Entity name is required.</p>
                   )}
                 </div>
-                <div className="mb-4 flex items-center justify-between gap-2">
+                <div className="mb-4 flex md:flex-row flex-col items-center justify-between gap-2">
                   <input
                     type="date"
                     placeholder="Date"
@@ -185,7 +185,7 @@ const NewTaskForm = ({ setData, formModal, setFormModal, initialTask }) => {
                     <select
                       value={hour}
                       onChange={(e) => setHour(e.target.value)}
-                      className="mt-1 rounded-l-md outline-none bg-gray-100 p-4 sm:text-sm"
+                      className="mt-1 md:w-auto w-full rounded-l-md outline-none bg-gray-100 p-4 sm:text-sm"
                     >
                       {Array.from({ length: 12 }, (_, i) => i + 1).map(h => (
                         <option key={h} value={h < 10 ? `0${h}` : h}>{h < 10 ? `0${h}` : h}</option>
@@ -194,7 +194,7 @@ const NewTaskForm = ({ setData, formModal, setFormModal, initialTask }) => {
                     <select
                       value={minute}
                       onChange={(e) => setMinute(e.target.value)}
-                      className="mt-1 outline-none bg-gray-100 p-4 sm:text-sm"
+                      className="mt-1 md:w-auto w-full block outline-none bg-gray-100 p-4 sm:text-sm"
                     >
                       {Array.from({ length: 60 }, (_, i) => (i < 10 ? `0${i}` : i)).map(m => (
                         <option key={m} value={m}>{m}</option>
@@ -203,7 +203,7 @@ const NewTaskForm = ({ setData, formModal, setFormModal, initialTask }) => {
                     <select
                       value={period}
                       onChange={(e) => setPeriod(e.target.value)}
-                      className="mt-1 rounded-r-md outline-none bg-gray-100 p-4 sm:text-sm"
+                      className="mt-1 md:w-auto w-full rounded-r-md outline-none bg-gray-100 p-4 sm:text-sm"
                     >
                       {["AM", "PM"].map(p => (
                         <option key={p} value={p}>{p}</option>

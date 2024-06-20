@@ -2,7 +2,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { useTable, useFilters, useSortBy } from "react-table";
 import { MdCall, MdVideocam } from "react-icons/md";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaFilter, FaLocationDot } from "react-icons/fa6";
 import { format } from "date-fns";
 import {
   ContactPersonFilter,
@@ -18,7 +18,7 @@ import {
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 import { useTaskProvider } from "@/context/TaskProvider";
-import { FaFilter } from "react-icons/fa";
+import AppliedFilter from "./AppliedFilter";
 
 const SalesLogTable = ({ data=[], handleEditTask }) => {
 
@@ -29,8 +29,24 @@ const SalesLogTable = ({ data=[], handleEditTask }) => {
   const [dateRange, setDateRange] = useState({ from: "", to: "" });
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  const [appliedFilters,setAppliedFilters] = useState([]);
 
   const { handleDupliAndStatus } = useTaskProvider();
+
+  const updateAppliedFilters = (filterType, filterValue) => {
+    setAppliedFilters((prev) => {
+      const existingFilter = prev.find(filter => filter.type === filterType);
+      if (existingFilter) {
+        return prev.map(filter => filter.type === filterType ? { type: filterType, value: filterValue } : filter);
+      } else {
+        return [...prev, { type: filterType, value: filterValue }];
+      }
+    });
+  };
+
+  const removeAppliedFilter = (filterType) => {
+    setAppliedFilters((prev) => prev.filter(filter => filter.type !== filterType));
+  };
 
   const handleSelectedTaskTypes = (taskType) => {
     if (selectedTaskTypes.includes(taskType)) {
@@ -315,9 +331,20 @@ const SalesLogTable = ({ data=[], handleEditTask }) => {
   return (
     <div className="overflow-x-auto min-h-96 h-[28rem]">
       <div className="px-4 pb-5 pt-4">
-        
-        <span className="text-gray-700 text-sm ">Use the icon {<FaFilter className="text-gray-500 text-xs inline-block"/>} next to the table titles to apply filters</span>
 
+
+      {
+
+       appliedFilters.length ? (
+         <div className="flex items-center justify-start gap-3">
+            <AppliedFilter />
+        </div>   
+       ) : (
+
+         <span className="text-gray-700 text-sm ">Use the icon {<FaFilter className="text-gray-500 text-xs inline-block"/>} next to the table titles to apply filters</span>
+         
+        )
+      }
 
       </div>
       <table className="min-w-full" {...getTableProps()}>
