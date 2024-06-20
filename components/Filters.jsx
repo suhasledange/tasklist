@@ -219,7 +219,7 @@ return (
       Add Note
     </button>
   ) : (
-    <span>
+    <span className='w-[15rem] block'>
         { 
        row.values.note && row.values.note.length > 30 
     ? `${row.values.note.slice(0, 35)}...` 

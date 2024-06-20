@@ -5,6 +5,7 @@ const context = createContext();
 export const TaskProvider = ({ children }) => {
 
   const [data,setData] = useState([]);
+  const [loading,setLoading] = useState(true);
     
 
     const fetchTasks = async()=>{
@@ -160,9 +161,10 @@ export const TaskProvider = ({ children }) => {
     const fetchData = async()=>{
 
       try {
+        setLoading(true);
         const res = await fetchTasks();
         setData(res)
-  
+        setLoading(false);
       } catch (error) {
         console.log("Error fetching tasks",error)
       }
@@ -177,7 +179,7 @@ export const TaskProvider = ({ children }) => {
 
    
     return (
-        <context.Provider value={{ fetchTasks,addTasks,updateTasks,deleteTask,handleDupliAndStatus,handleChangeStatus,data,setData }}>
+        <context.Provider value={{ loading,fetchTasks,addTasks,updateTasks,deleteTask,handleDupliAndStatus,handleChangeStatus,data,setData }}>
             {children}
         </context.Provider>
     );

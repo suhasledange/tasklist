@@ -1,12 +1,14 @@
 'use client'
 import { useTaskProvider } from "@/context/TaskProvider";
-import React, { useEffect } from "react";
+import { CircularProgress } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const AddNotesForm = ({addNoteModal,setAddNoteModel,initialTask}) => {
   const { register, handleSubmit, setValue, formState: { errors },reset } = useForm();
 
   const {fetchTasks,updateTasks,setData} = useTaskProvider();
+  const [loading,setLoading] = useState(false);
 
   const setInitialTaskValues = ()=>{
 
@@ -31,19 +33,26 @@ const AddNotesForm = ({addNoteModal,setAddNoteModel,initialTask}) => {
     
     try {
 
+      setLoading(true);
+
        const result = await updateTasks(initialTask._id,data);
     
       if (result.success) {
         console.log("Task saved successfully");
+        setLoading(false);
         reset();
         const res = await fetchTasks();
         setAddNoteModel(false);
         setData(res);
       } else {
         console.error("Error saving task", result.error);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error submitting form", error);
+    }
+    finally{
+      setLoading(false);
     }
 
   };
@@ -82,7 +91,7 @@ const AddNotesForm = ({addNoteModal,setAddNoteModel,initialTask}) => {
 
                 <div className="flex justify-between">
                  
-                <div>
+                <div className="flex items-center">
                   <button
                     type="button"
                     className="mr-4 border border-slate-500 md:px-8 px-5 py-2 rounded-sm"
@@ -92,15 +101,13 @@ const AddNotesForm = ({addNoteModal,setAddNoteModel,initialTask}) => {
                   </button>
                   <button
                     type="submit"
-                    className="md:px-8 px-5 py-2 active:scale-95 bg-[#004b6e] text-white rounded-sm"
+                    className="md:px-8 flex items-center justify-center gap-2 px-5 py-2 active:scale-95 bg-[#004b6e] text-white rounded-sm"
                   >
                     Save
+                  {loading && <CircularProgress size={18}/>}
                   </button>
                 </div>
-
                 </div>
-
-
               </form>
             </div>
           </div>

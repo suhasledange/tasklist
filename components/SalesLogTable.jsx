@@ -20,7 +20,7 @@ import TableBody from "./TableBody";
 import { useTaskProvider } from "@/context/TaskProvider";
 import { FaFilter } from "react-icons/fa";
 
-const SalesLogTable = ({ data, handleEditTask }) => {
+const SalesLogTable = ({ data=[], handleEditTask }) => {
 
   const [openFilter, setOpenFilter] = useState(null);
   const [selectedTaskTypes, setSelectedTaskTypes] = useState([]);
@@ -165,14 +165,18 @@ const SalesLogTable = ({ data, handleEditTask }) => {
         filter: (rows, columnIds, filterValue) => {
           if (!filterValue) return rows;
           return rows.filter((row) => {
-            const hour = new Date(`1970-01-01T${row.values.time}`).getHours();
+            const timeString = row.values.time;
+            const [time, period] = timeString.split(" ");
+            const [hour, minute] = time.split(":");
+            const hourInt = parseInt(hour, 10);
+            
             switch (filterValue) {
               case "morning":
-                return hour >= 5 && hour < 12;
+                return period === "AM" && hourInt >= 5 && hourInt < 12;
               case "afternoon":
-                return hour >= 12 && hour < 17;
+                return (period === "AM" && hourInt === 12) || (period === "PM" && hourInt < 5);
               case "evening":
-                return hour >= 17 && hour < 21;
+                return period === "PM" && hourInt >= 5 && hourInt < 9;
               default:
                 return true;
             }
